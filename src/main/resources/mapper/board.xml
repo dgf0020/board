@@ -17,4 +17,8 @@
         select * from board where id = #{id}
     </select>
 
+    <select id="getBoardList" resultType="com.study_2.board_2.domain.entity.Board">
+        select * from board
+    </select>
+
 </mapper>

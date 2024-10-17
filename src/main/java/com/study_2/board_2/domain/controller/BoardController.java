@@ -2,7 +2,9 @@ package com.study_2.board_2.domain.controller;
 
 import com.study_2.board_2.domain.dto.req.CreateBoardReqDto;
 import com.study_2.board_2.domain.service.CreateBoardService;
+import com.study_2.board_2.domain.service.GetBoardListService;
 import com.study_2.board_2.domain.service.GetBoardService;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,7 @@ public class BoardController {
 
     private final CreateBoardService createBoardService;
     private final GetBoardService getBoardService;
+    private final GetBoardListService getBoardListService;
 
     // 게시글 생성
     @PostMapping
@@ -33,5 +36,11 @@ public class BoardController {
     @GetMapping("/{id}")
     public ResponseEntity<?> getBoard(@PathVariable Long id) {
         return ResponseEntity.ok().body(getBoardService.getBoard(id));
+    }
+
+    // 게시글 목록 조회
+    @GetMapping("/list")
+    public ResponseEntity<?> getBoardList() {
+        return ResponseEntity.ok().body(getBoardListService.getBoardList());
     }
 }

@@ -25,4 +25,10 @@
         delete from board where id = #{id}
     </delete>
 
+    <update id="updateBoard">
+        update board
+        set title = #{title}, content = #{content}, updated_date = #{updatedDate}
+        where id = #{id}
+    </update>
+
 </mapper>

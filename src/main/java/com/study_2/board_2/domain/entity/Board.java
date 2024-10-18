@@ -15,8 +15,8 @@ public class Board {
     private String title;
     private String content;
     private String author;
-    private LocalDateTime created_date;
-    private LocalDateTime updated_date;
+    private LocalDateTime createdDate;
+    private LocalDateTime updatedDate;
 
     public GetBoardRespDto of() {
     // entity -> Dto로 변환
@@ -25,8 +25,8 @@ public class Board {
                 .title(this.title)
                 .content(this.content)
                 .author(this.author)
-                .created_date(this.created_date)
-                .updated_date(this.updated_date)
+                .created_date(this.createdDate)
+                .updated_date(this.updatedDate)
                 .build();
     }
 
@@ -35,7 +35,7 @@ public class Board {
                 .id(this.id)
                 .title(this.title)
                 .author(this.author)
-                .created_date(this.created_date)
+                .created_date(this.createdDate)
                 .build();
     }
 }

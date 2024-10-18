@@ -9,7 +9,7 @@
     <insert id="createBoard">
     <!-- id : 서비스에서 호출할 때 사용할 메서드 이름과 일치해야 한다. (boardMapper.createBoard(req.of());여기 이름) -->
         insert into board(title, content, author, created_date, updated_date)
-        values(#{title}, #{content}, #{author}, #{created_date}, #{updated_date})
+        values(#{title}, #{content}, #{author}, #{createdDate}, #{updatedDate})
     </insert>
 
     <select id="getBoard" resultType="com.study_2.board_2.domain.entity.Board">

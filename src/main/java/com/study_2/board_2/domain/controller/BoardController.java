@@ -2,6 +2,7 @@ package com.study_2.board_2.domain.controller;
 
 import com.study_2.board_2.domain.dto.req.CreateBoardReqDto;
 import com.study_2.board_2.domain.service.CreateBoardService;
+import com.study_2.board_2.domain.service.DeleteBoardService;
 import com.study_2.board_2.domain.service.GetBoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ public class BoardController {
 
     private final CreateBoardService createBoardService;
     private final GetBoardService getBoardService;
+    private final DeleteBoardService deleteBoardService;
 
     // 게시글 생성
     @PostMapping
@@ -25,7 +27,7 @@ public class BoardController {
 
         createBoardService.createBoard(req);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body("게시판 생성 완료");
+        return ResponseEntity.status(HttpStatus.CREATED).body("게시글 생성 완료");
     }
 
     // 게시글 상세 조회
@@ -38,5 +40,12 @@ public class BoardController {
     @GetMapping("/list")
     public ResponseEntity<?> getBoardList() {
         return ResponseEntity.ok().body(getBoardService.getBoardList());
+    }
+
+    // 게시글 삭제
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteBoard(@PathVariable Long id) {
+        deleteBoardService.deleteBoard(id);
+        return ResponseEntity.ok().body("게시글 삭제 완료");
     }
 }

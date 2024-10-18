@@ -36,7 +36,7 @@ public class GetBoardService {
                 .map(Board::of)
                 // map은 스트림의 각 요소를 변환할 때 사용
                 // Board를 of(GetBoardRespDto)로 변환
-                .collect(Collectors.toList());
+                .toList();
         // 변환한 것들을 List 형태로 주워담아서 결국 List<GetBoardRespDto>가 된다
     }
 }

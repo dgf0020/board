@@ -21,4 +21,10 @@ public interface BoardMapper {
 
     // 게시글 삭제 (void)
     void deleteBoard(Long id);
+
+    // 총 게시글 수 (int)
+    int getTotalPosts();
+
+    // 게시글 목록 조회 Pagination (List<Board>)
+    List<Board> getBoardListPagination(int pageSize, int offset);
 }

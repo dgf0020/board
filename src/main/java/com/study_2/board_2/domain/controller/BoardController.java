@@ -2,10 +2,7 @@ package com.study_2.board_2.domain.controller;
 
 import com.study_2.board_2.domain.dto.req.CreateBoardReqDto;
 import com.study_2.board_2.domain.dto.req.UpdateBoardReqDto;
-import com.study_2.board_2.domain.service.CreateBoardService;
-import com.study_2.board_2.domain.service.DeleteBoardService;
-import com.study_2.board_2.domain.service.GetBoardService;
-import com.study_2.board_2.domain.service.UpdateBoardService;
+import com.study_2.board_2.domain.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +19,7 @@ public class BoardController {
     private final GetBoardService getBoardService;
     private final DeleteBoardService deleteBoardService;
     private final UpdateBoardService updateBoardService;
+    private final GetBoardListPaginationService getBoardListPaginationService;
 
     // 게시글 생성
     @PostMapping
@@ -57,5 +55,11 @@ public class BoardController {
     public ResponseEntity<?> updateBoard(@PathVariable Long id, @RequestBody UpdateBoardReqDto req) {
         updateBoardService.updateBoard(id, req);
         return ResponseEntity.ok().body("게시글 수정 완료!");
+    }
+
+    // 게시글 목록 조회 (Pagination)
+    @GetMapping("/list/{pageNumber}")
+    public ResponseEntity<?> getBoardListPagination(@PathVariable int pageNumber) {
+        return ResponseEntity.ok().body(getBoardListPaginationService.getBoardListPagination(pageNumber));
     }
 }

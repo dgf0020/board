@@ -31,4 +31,14 @@
         where id = #{id}
     </update>
 
+    <select id="getTotalPosts" resultType="Integer">
+        select count(*) from board;
+    </select>
+
+    <select id="getBoardListPagination" resultType="com.study_2.board_2.domain.entity.Board">
+        select * from board
+        order by id desc
+        limit #{pageSize} offset #{offset}
+    </select>
+
 </mapper>

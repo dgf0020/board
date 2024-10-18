@@ -1,6 +1,5 @@
 package com.study_2.board_2.domain.entity;
 
-import com.study_2.board_2.domain.dto.resp.GetBoardListRespDto;
 import com.study_2.board_2.domain.dto.resp.GetBoardRespDto;
 import lombok.Builder;
 import lombok.Getter;
@@ -27,15 +26,6 @@ public class Board {
                 .author(this.author)
                 .created_date(this.createdDate)
                 .updated_date(this.updatedDate)
-                .build();
-    }
-
-    public GetBoardListRespDto toDto() {
-        return GetBoardListRespDto.builder()
-                .id(this.id)
-                .title(this.title)
-                .author(this.author)
-                .created_date(this.createdDate)
                 .build();
     }
 }

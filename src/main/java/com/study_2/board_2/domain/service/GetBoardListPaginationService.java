@@ -18,9 +18,8 @@ import java.util.stream.Collectors;
 public class GetBoardListPaginationService {
 
     private final BoardMapper boardMapper;
-    private final int pageSize = 10;    // 한 페이지 당 보여줄 게시글 수 (10개로 고정)
 
-    public GetBoardListPaginationRespDto getBoardListPagination(int pageNumber) {
+    public GetBoardListPaginationRespDto getBoardListPagination(int pageNumber, int pageSize) {
     // 컨트롤러에서 받아온 pageNumber를 가지고 서비스단에서 필요한 정보들의 값을 구한다
 
         // 1. 현재 페이지

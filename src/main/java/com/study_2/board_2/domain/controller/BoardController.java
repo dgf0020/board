@@ -58,8 +58,15 @@ public class BoardController {
     }
 
     // 게시글 목록 조회 (Pagination)
-    @GetMapping("/list/{pageNumber}")
-    public ResponseEntity<?> getBoardListPagination(@PathVariable int pageNumber) {
-        return ResponseEntity.ok().body(getBoardListPaginationService.getBoardListPagination(pageNumber));
+    // * 수정사항 *
+    // @PathVariable는 보안상의 이유로 사용한다. 페이지넘버는 requestparam을 사용한다.
+    // 객체를 만들어서 쓰는것은 post,put,patch => requestbody사용하는거
+    // get, delete는 웬만해서는 requestbody를 쓰지말자
+    @GetMapping("/pageList")
+    public ResponseEntity<?> getBoardListPagination(@RequestParam(name = "pageNumber") int pageNumber, @RequestParam(name = "pageSize", defaultValue = "10") int pageSize) {
+    // 클라이언트가 pageList?pagenumber=1&pagesize=10 이런 형식으로 요청을 보내야함
+    // @RequestParam(name = "pageSize", defaultValue = "10") int pageSize => 기본적으로 pageSize는 10으로 정함
+
+        return ResponseEntity.ok().body(getBoardListPaginationService.getBoardListPagination(pageNumber, pageSize));
     }
 }

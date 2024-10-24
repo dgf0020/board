@@ -3,20 +3,17 @@ package com.study_2.board_2.domain.service;
 import com.study_2.board_2.domain.dto.resp.GetBoardListPaginationRespDto;
 import com.study_2.board_2.domain.dto.resp.GetBoardRespDto;
 import com.study_2.board_2.domain.entity.Board;
-import com.study_2.board_2.global.mapper.BoardMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Transactional(readOnly = true)
 @Service
 @RequiredArgsConstructor
 public class GetBoardListPaginationService {
-
+/*
     private final BoardMapper boardMapper;
 
     public GetBoardListPaginationRespDto getBoardListPagination(int pageNumber, int pageSize) {
@@ -53,4 +50,5 @@ public class GetBoardListPaginationService {
                 .boardList(boardList)
                 .build();
     }
+*/
 }

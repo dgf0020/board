@@ -1,6 +1,6 @@
 package com.study_2.board_2.domain.service;
 
-import com.study_2.board_2.global.mapper.BoardMapper;
+import com.study_2.board_2.domain.entity.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,9 +9,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class DeleteBoardService {
-    private final BoardMapper boardMapper;
+//    private final BoardMapper boardMapper;
+    private final BoardRepository boardRepository;
 
     public void deleteBoard(Long id) {
-        boardMapper.deleteBoard(id);
+        // boardMapper.deleteBoard(id);
+
+        boardRepository.deleteById(id);
     }
 }

@@ -18,8 +18,6 @@ public record CreateBoardReqDto(
                 .title(this.title)
                 .content(this.content)
                 .author(this.author)
-                .createdDate(LocalDateTime.now())
-                .updatedDate(LocalDateTime.now())
                 .build();
     }
 }

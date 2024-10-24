@@ -3,11 +3,14 @@ package com.study_2.board_2.domain.controller;
 import com.study_2.board_2.domain.dto.req.CreateBoardReqDto;
 import com.study_2.board_2.domain.dto.req.UpdateBoardReqDto;
 import com.study_2.board_2.domain.service.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@Tag(name = "Board", description = "게시판 API")
 @RestController
 // @RestController = @Controller + @ResponseBody
 @RequestMapping("/board")
@@ -22,6 +25,7 @@ public class BoardController {
     private final GetBoardListPaginationService getBoardListPaginationService;
 
     // 게시글 생성
+    @Operation(summary = "게시글 생성", description = "게시글을 생성합니다.")
     @PostMapping
     public ResponseEntity<?> createBoard(@RequestBody CreateBoardReqDto req) {
     // @RequestBody를 사용하면 본문에서 JSON 데이터를 읽어와서 지정된 DTO 객체(CreateBoardReqDto)로 자동 변환해줌
@@ -32,18 +36,21 @@ public class BoardController {
     }
 
     // 게시글 상세 조회
+    @Operation(summary = "게시글 상세 조회", description = "게시글의 상세 정보를 조회합니다.")
     @GetMapping("/{id}")
     public ResponseEntity<?> getBoard(@PathVariable Long id) {
         return ResponseEntity.ok().body(getBoardService.getBoard(id));
     }
 
     // 게시글 목록 조회
+    @Operation(summary = "게시글 목록 조회", description = "게시글의 전체 목록을 조회합니다.")
     @GetMapping("/list")
     public ResponseEntity<?> getBoardList() {
         return ResponseEntity.ok().body(getBoardService.getBoardList());
     }
 
     // 게시글 삭제
+    @Operation(summary = "게시글 삭제", description = "게시글을 삭제합니다.")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteBoard(@PathVariable Long id) {
         deleteBoardService.deleteBoard(id);
@@ -51,12 +58,14 @@ public class BoardController {
     }
 
     // 게시글 수정
+    @Operation(summary = "게시글 수정", description = "게시판글을 수정합니다.")
     @PutMapping("/update/{id}")
     public ResponseEntity<?> updateBoard(@PathVariable Long id, @RequestBody UpdateBoardReqDto req) {
         updateBoardService.updateBoard(id, req);
         return ResponseEntity.ok().body("게시글 수정 완료!");
     }
 
+    /*
     // 게시글 목록 조회 (Pagination)
     // * 수정사항 *
     // @PathVariable는 보안상의 이유로 사용한다. 페이지넘버는 requestparam을 사용한다.
@@ -69,4 +78,5 @@ public class BoardController {
 
         return ResponseEntity.ok().body(getBoardListPaginationService.getBoardListPagination(pageNumber, pageSize));
     }
+    */
 }

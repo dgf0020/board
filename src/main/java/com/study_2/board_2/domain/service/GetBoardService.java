@@ -2,28 +2,46 @@ package com.study_2.board_2.domain.service;
 
 import com.study_2.board_2.domain.dto.resp.GetBoardRespDto;
 import com.study_2.board_2.domain.entity.Board;
-import com.study_2.board_2.global.mapper.BoardMapper;
+import com.study_2.board_2.domain.entity.repository.BoardRepository;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Transactional(readOnly = true)
 @Service
 @RequiredArgsConstructor
 public class GetBoardService {
 
-    private final BoardMapper boardMapper;
+//    private final BoardMapper boardMapper;
+    private final BoardRepository boardRepository;
 
     public GetBoardRespDto getBoard(Long id) {
-        return boardMapper.getBoard(id).of();
+//        return boardMapper.getBoard(id).of();
+
+      Optional<Board> optionalBoard = boardRepository.findById(id);
+      // findById() : 반환형이 Optional<T>이다
+      // Optional<T> : 값이 들어있을수도, 비어있을수도있음
+
+      if (optionalBoard.isPresent()) {
+      // optionalBoard에 값이 들어있는 경우
+        return optionalBoard.get().of();
+      } else {
+        throw new NoSuchElementException("해당 ID와 일치하는 게시글이 존재하지 않습니다.");
+        // NoSuchElementException : Optional에 값이 비어있는 empty 상태일 때 .get()을 하면 발생하는 예외
+      }
     }
 
     public List<GetBoardRespDto> getBoardList() {
-        // 게시글 전체 목록을 받아오니까 List<GetBoardRespDto>
+      List<Board> boardList = boardRepository.findAll();
 
+      return boardList.stream()
+          .map(Board::of)
+          .toList();
+        /*
         List<Board> board = boardMapper.getBoardList();
         // boardMapper.getBoardList() 메서드를 호출 => board 테이블 전체를 가져옴
         // 그것을 List<Board> 타입의 board 변수에 저장한다.
@@ -38,5 +56,6 @@ public class GetBoardService {
                 // Board를 of(GetBoardRespDto)로 변환
                 .toList();
         // 변환한 것들을 List 형태로 주워담아서 결국 List<GetBoardRespDto>가 된다
+        */
     }
 }

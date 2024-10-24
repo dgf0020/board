@@ -12,7 +12,6 @@ public record UpdateBoardReqDto(
         return Board.builder()
                 .title(this.title)
                 .content(this.content)
-                .updatedDate(LocalDateTime.now())
                 .build();
     }
 }

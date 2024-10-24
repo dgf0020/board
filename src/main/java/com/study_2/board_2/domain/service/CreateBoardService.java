@@ -1,9 +1,8 @@
 package com.study_2.board_2.domain.service;
 
 import com.study_2.board_2.domain.dto.req.CreateBoardReqDto;
-import com.study_2.board_2.global.mapper.BoardMapper;
+import com.study_2.board_2.domain.entity.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,12 +17,15 @@ import org.springframework.transaction.annotation.Transactional;
 // 이거 있으면 @Autowired 따로 안적어줘도 된다.
 public class CreateBoardService {
 
-    private final BoardMapper boardMapper;
-    // @Autowired 대신 final (@RequiredArgsConstructor 어노테이션 적어줘야함)
+//    private final BoardMapper boardMapper;
+    private final BoardRepository boardRepository;
+    // Mybatis에서는 Mapper 인터페이스를 사용하지만
+    // JPA에서는 JpaRepository 인터페이스를 사용한다.
 
     public void createBoard(CreateBoardReqDto req) {
-    // ReqDto를 받아서 새로운 게시글을 생성
-        boardMapper.createBoard(req.of());
+        boardRepository.save(req.of());
+
+        // boardMapper.createBoard(req.of());
         // Dto에서 변환된 Board 객체를 사용하여 데이터베이스에 새 행을 추가 -> service에서 dto를 entity로 형태를 바꿈
     }
 

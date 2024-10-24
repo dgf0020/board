@@ -10,8 +10,8 @@ public record GetBoardRespDto(
         String title,
         String content,
         String author,
-        LocalDateTime created_date,
-        LocalDateTime updated_date
+        LocalDateTime createdDate,
+        LocalDateTime updatedDate
         // 결과로 보여줄 필드들 (필요없는 필드는 삭제해도 된다)
 ) {
 }

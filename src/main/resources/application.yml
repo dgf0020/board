@@ -8,6 +8,19 @@ spring:
     console:
       enabled: true
       path: /h2-console
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    # 메서드가 호출이 될 때 로그로 남겨준다
+    properties:
+      hibernate:
+        format_sql: true
 
-mybatis:
-  mapper-locations: classpath:mapper/*.xml
+#mybatis:
+#  mapper-locations: classpath:mapper/*.xml
+#  - JPA에서는 yml에서 설정한
+#  - spring.jpa.hibernate.ddl- 속성을 통해 스키마 자동 생성
+#  - create => 애플리케이션이 실행될 때마다 데이터베이스의 기존 스키마를 삭제하고
+#  - 새로운 스키마를 생성함. 테이블의 변화가 있을때마다 데이터가 지워짐.
+#  - (지금은 create를 쓰지만 실제로 현업에서는 잘 안씀)

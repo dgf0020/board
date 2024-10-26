@@ -89,7 +89,7 @@ public class BoardController {
     // 게시글 목록 조회 (Pagination)
     @Operation(summary = "페이지별 게시글 목록 조회", description = "페이지별로 게시글 목록을 조회합니다.")
     @GetMapping("/pageList")
-    public ResponseEntity<?> getBoardListPagination(
+    public ResponseEntity<List<GetBoardRespDto>> getBoardListPagination(
         @RequestParam(defaultValue = "0") int pageNO,
         @RequestParam(defaultValue = "10") int pageSize,
         @RequestParam(defaultValue = "createdDate") String sortBy,

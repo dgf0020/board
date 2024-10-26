@@ -1,7 +1,10 @@
 package com.study_2.board_2.domain.board.service;
 
 import com.study_2.board_2.domain.board.dto.req.UpdateBoardReqDto;
+import com.study_2.board_2.domain.board.entity.Board;
 import com.study_2.board_2.domain.board.entity.repository.BoardRepository;
+import com.study_2.board_2.domain.user.entity.User;
+import java.util.NoSuchElementException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,39 +14,17 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class UpdateBoardService {
 
-//    private final BoardMapper boardMapper;
     private final BoardRepository boardRepository;
 
-    public void updateBoard(Long id, UpdateBoardReqDto req) {
+    public void updateBoard(Long id, UpdateBoardReqDto req, User user) {
 
-        boardRepository.findById(id).orElseThrow().updateBoard(req.title(), req.content());
+        Board board = boardRepository.findById(id)
+            .orElseThrow(() -> new NoSuchElementException("해당 ID와 일치하는 게시글이 존재하지 않습니다."));
 
-        /*
-        Optional<Board> optionalBoard = boardRepository.findById(id);
-
-        if (optionalBoard.isPresent()) {
-            Board board = optionalBoard.get();
-
-            board.updateBoard(req.title(), req.content());
-
-            boardRepository.save(board);
-            // save는 db에 해당 id의 값이 없으면 생성해주고,
-            // 동일한 id가 있는 경우는 update 해준다
-
-        } else {
-            throw new NoSuchElementException("해당 ID와 일치하는 게시글이 존재하지 않습니다.");
+        if (!board.getUser().getId().equals(user.getId())) {
+            throw new RuntimeException("수정 권한이 없습니다.");
         }
-        */
 
-        /*
-        Board boardToUpdate = req.of();
-        // 전달받은 id값을 설정하기위해 board 생성
-
-        boardToUpdate.setId(id);
-        // setId를 통해 id값 설정
-
-        boardMapper.updateBoard(boardToUpdate);
-        // id, title, content값이 설정된 board객체를 가지고 mapper로 간다
-        */
+        board.updateBoard(req.title(), req.content());
     }
 }

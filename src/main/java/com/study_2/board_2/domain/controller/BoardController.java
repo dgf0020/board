@@ -86,6 +86,14 @@ public class BoardController {
         }
     }
 
+    // 게시글 목록 조회 (Pagination)
+    @Operation(summary = "페이지별 게시글 목록 조회", description = "페이지별로 게시글 목록을 조회합니다.")
+    @GetMapping("/pageList")
+    public ResponseEntity<?> getBoardListPagination(@RequestParam(defaultValue = "0") int pageNO, @RequestParam(defaultValue = "10") int pageSize) {
+    // defaultValue의 값은 문자열로 써야한다, pageNO가 0부터 시작한다
+        return ResponseEntity.ok().body(getBoardService.getBoardListPagination(pageNO, pageSize).getContent());
+    }
+
     /*
     // 게시글 목록 조회 (Pagination)
     // * 수정사항 *

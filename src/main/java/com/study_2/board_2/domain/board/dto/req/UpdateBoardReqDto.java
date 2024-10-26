@@ -1,8 +1,6 @@
-package com.study_2.board_2.domain.dto.req;
+package com.study_2.board_2.domain.board.dto.req;
 
-import com.study_2.board_2.domain.entity.Board;
-
-import java.time.LocalDateTime;
+import com.study_2.board_2.domain.board.entity.Board;
 
 public record UpdateBoardReqDto(
         String title,

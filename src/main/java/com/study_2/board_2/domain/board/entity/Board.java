@@ -1,20 +1,21 @@
-package com.study_2.board_2.domain.entity;
+package com.study_2.board_2.domain.board.entity;
 
-import com.study_2.board_2.domain.dto.resp.GetBoardRespDto;
+import com.study_2.board_2.domain.board.dto.resp.GetBoardRespDto;
+import com.study_2.board_2.domain.user.entity.User;
 import com.study_2.board_2.global.entity.BaseTimeEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-import java.time.LocalDateTime;
 import org.hibernate.annotations.Comment;
 
 @Getter
@@ -53,9 +54,12 @@ public class Board extends BaseTimeEntity {
     @Comment("게시글 내용")
     private String content;
 
-    @Column(name = "author")
-    @Comment("작성자")
-    private String author;
+    @ManyToOne
+    // 엔티티인 board가 many, 필드인 user가 one
+    // => 여러개의 board객체가 하나의 user객체와 연결
+    // (유저 한명이 게시글 여러개를 작성할 수 있다)
+    @JoinColumn(name = "user_id")
+    private User user;
 
 //    private LocalDateTime createdDate;
 //    private LocalDateTime updatedDate;
@@ -68,7 +72,7 @@ public class Board extends BaseTimeEntity {
             .id(this.id)
             .title(this.title)
             .content(this.content)
-            .author(this.author)
+            .author(this.user.getUsername())
             .createdDate(this.getCreatedDate())
             .updatedDate(this.getUpdatedDate())
             .build();

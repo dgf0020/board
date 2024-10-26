@@ -1,12 +1,17 @@
-package com.study_2.board_2.domain.controller;
+package com.study_2.board_2.domain.board.controller;
 
-import com.study_2.board_2.domain.dto.req.CreateBoardReqDto;
-import com.study_2.board_2.domain.dto.req.UpdateBoardReqDto;
-import com.study_2.board_2.domain.dto.resp.GetBoardRespDto;
-import com.study_2.board_2.domain.entity.Board;
-import com.study_2.board_2.domain.service.*;
+import com.study_2.board_2.domain.board.dto.req.CreateBoardReqDto;
+import com.study_2.board_2.domain.board.dto.req.UpdateBoardReqDto;
+import com.study_2.board_2.domain.board.dto.resp.GetBoardRespDto;
+import com.study_2.board_2.domain.board.service.CreateBoardService;
+import com.study_2.board_2.domain.board.service.DeleteBoardService;
+import com.study_2.board_2.domain.board.service.GetBoardListPaginationService;
+import com.study_2.board_2.domain.board.service.GetBoardService;
+import com.study_2.board_2.domain.board.service.UpdateBoardService;
+import com.study_2.board_2.domain.user.entity.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -30,9 +35,15 @@ public class BoardController {
     // 게시글 생성
     @Operation(summary = "게시글 생성", description = "게시글을 생성합니다.")
     @PostMapping
-    public ResponseEntity<String> createBoard(@RequestBody CreateBoardReqDto req) {
+    public ResponseEntity<String> createBoard(@RequestBody CreateBoardReqDto req, HttpSession session) {
         try {
-            createBoardService.createBoard(req);
+            User user = (User) session.getAttribute("user");
+
+            if (user == null) {
+                return ResponseEntity.status(401).body("로그인 해주세요");
+            }
+
+            createBoardService.createBoard(req, user);
             return ResponseEntity.status(HttpStatus.CREATED).body("게시글 생성 완료");
         } catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());

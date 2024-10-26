@@ -12,12 +12,12 @@
         values(#{title}, #{content}, #{author}, #{createdDate}, #{updatedDate})
     </insert>
 
-    <select id="getBoard" resultType="com.study_2.board_2.domain.entity.Board">
+    <select id="getBoard" resultType="com.study_2.board_2.domain.board.entity.Board">
     <!-- resultType : 쿼리 결과를 매핑할 엔티티 클래스를 명시. 쿼리 결과를 이 클래스의 객체로 변환해 반환 -->
         select * from board where id = #{id}
     </select>
 
-    <select id="getBoardList" resultType="com.study_2.board_2.domain.entity.Board">
+    <select id="getBoardList" resultType="com.study_2.board_2.domain.board.entity.Board">
         select * from board
     </select>
 
@@ -35,7 +35,7 @@
         select count(*) from board;
     </select>
 
-    <select id="getBoardListPagination" resultType="com.study_2.board_2.domain.entity.Board">
+    <select id="getBoardListPagination" resultType="com.study_2.board_2.domain.board.entity.Board">
         select * from board
         order by id desc
         limit #{pageSize} offset #{offset}

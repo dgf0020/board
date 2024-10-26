@@ -1,6 +1,5 @@
-package com.study_2.board_2.domain.dto.resp;
+package com.study_2.board_2.domain.board.dto.resp;
 
-import com.study_2.board_2.domain.entity.Board;
 import lombok.Builder;
 
 import java.util.List;

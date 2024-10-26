@@ -1,6 +1,6 @@
-package com.study_2.board_2.domain.dto.resp;
+package com.study_2.board_2.domain.board.dto.resp;
 
-import com.study_2.board_2.domain.entity.Board;
+import com.study_2.board_2.domain.board.entity.Board;
 import lombok.Builder;
 
 import java.time.LocalDateTime;
@@ -21,7 +21,7 @@ public record GetBoardRespDto(
         .id(board.getId())
         .title(board.getTitle())
         .content(board.getContent())
-        .author(board.getAuthor())
+        .author(board.getUser().getUsername())
         .createdDate(board.getCreatedDate())
         .updatedDate(board.getUpdatedDate())
         .build();

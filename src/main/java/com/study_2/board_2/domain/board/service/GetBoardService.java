@@ -1,11 +1,9 @@
-package com.study_2.board_2.domain.service;
+package com.study_2.board_2.domain.board.service;
 
-import com.study_2.board_2.domain.dto.resp.GetBoardRespDto;
-import com.study_2.board_2.domain.entity.Board;
-import com.study_2.board_2.domain.entity.repository.BoardRepository;
+import com.study_2.board_2.domain.board.dto.resp.GetBoardRespDto;
+import com.study_2.board_2.domain.board.entity.Board;
+import com.study_2.board_2.domain.board.entity.repository.BoardRepository;
 import java.util.NoSuchElementException;
-import java.util.Optional;
-import java.util.Properties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

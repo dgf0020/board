@@ -1,7 +1,8 @@
-package com.study_2.board_2.domain.service;
+package com.study_2.board_2.domain.board.service;
 
-import com.study_2.board_2.domain.dto.req.CreateBoardReqDto;
-import com.study_2.board_2.domain.entity.repository.BoardRepository;
+import com.study_2.board_2.domain.board.dto.req.CreateBoardReqDto;
+import com.study_2.board_2.domain.board.entity.repository.BoardRepository;
+import com.study_2.board_2.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,8 +23,8 @@ public class CreateBoardService {
     // Mybatis에서는 Mapper 인터페이스를 사용하지만
     // JPA에서는 JpaRepository 인터페이스를 사용한다.
 
-    public void createBoard(CreateBoardReqDto req) {
-        boardRepository.save(req.of());
+    public void createBoard(CreateBoardReqDto req, User user) {
+        boardRepository.save(req.of(user));
 
         // boardMapper.createBoard(req.of());
         // Dto에서 변환된 Board 객체를 사용하여 데이터베이스에 새 행을 추가 -> service에서 dto를 entity로 형태를 바꿈

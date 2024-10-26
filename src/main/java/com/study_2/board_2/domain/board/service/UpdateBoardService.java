@@ -1,10 +1,7 @@
-package com.study_2.board_2.domain.service;
+package com.study_2.board_2.domain.board.service;
 
-import com.study_2.board_2.domain.dto.req.UpdateBoardReqDto;
-import com.study_2.board_2.domain.entity.Board;
-import com.study_2.board_2.domain.entity.repository.BoardRepository;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import com.study_2.board_2.domain.board.dto.req.UpdateBoardReqDto;
+import com.study_2.board_2.domain.board.entity.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

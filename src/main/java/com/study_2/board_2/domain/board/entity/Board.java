@@ -41,7 +41,7 @@ public class Board extends BaseTimeEntity {
     // GenerationType.IDENTITY : db에서 auto-increment 자동증가할 때 쓰임
     private Long id;
 
-    @Column(name = "title")
+    @Column(name = "title", nullable = false)
     // Column : 해당 필드가 db 테이블의 특정 열과 매핑되도록 함
     // (name = "title") : db 테이블의 열 중에서도 title과 매핑
     // 여기서는 name 속성 값과 필드명이 같아서 생략해도 된다

@@ -72,12 +72,13 @@ public class GetBoardService {
   }
 
   // pagination도 GetBoardService에 같이 하자!
-  public Page<?> getBoardListPagination(int pageNo, int pageSize) {
+  public Page<?> getBoardListPagination(int pageNo, int pageSize, String sortBy, String direction) {
   // pageNo, pageSize 외에도 정렬방식 등을 받을 수도 있다.
 
-    Pageable pageable = PageRequest.of(pageNo, pageSize);
+    Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(Sort.Direction.fromString(direction), sortBy));
 
-    return boardRepository.findAllByOrderByCreatedDateDesc(pageable).map(GetBoardRespDto::from);
+    return boardRepository.findAll(pageable).map(GetBoardRespDto::from);
+    //return boardRepository.findAllByOrderByCreatedDateDesc(pageable).map(GetBoardRespDto::from);
   }
 
   public List<Board> getBoardListSorted() {

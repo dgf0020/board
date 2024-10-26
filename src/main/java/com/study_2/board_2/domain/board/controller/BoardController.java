@@ -75,14 +75,19 @@ public class BoardController {
     // 게시글 삭제
     @Operation(summary = "게시글 삭제", description = "게시글을 삭제합니다.")
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteBoard(@PathVariable Long id) {
+    public ResponseEntity<String> deleteBoard(@PathVariable Long id, HttpSession session) {
         try {
-            deleteBoardService.deleteBoard(id);
+            User user = (User) session.getAttribute("user");
+
+            if (user == null) {
+                return ResponseEntity.badRequest().body("로그인 해주세요");
+            }
+
+            deleteBoardService.deleteBoard(id, user);
             return ResponseEntity.ok().body("게시글 삭제 완료");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
-
     }
 
     // 게시글 수정

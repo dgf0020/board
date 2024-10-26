@@ -19,6 +19,9 @@ public class UpdateBoardService {
 
     public void updateBoard(Long id, UpdateBoardReqDto req) {
 
+        boardRepository.findById(id).orElseThrow().updateBoard(req.title(), req.content());
+
+        /*
         Optional<Board> optionalBoard = boardRepository.findById(id);
 
         if (optionalBoard.isPresent()) {
@@ -33,6 +36,7 @@ public class UpdateBoardService {
         } else {
             throw new NoSuchElementException("해당 ID와 일치하는 게시글이 존재하지 않습니다.");
         }
+        */
 
         /*
         Board boardToUpdate = req.of();

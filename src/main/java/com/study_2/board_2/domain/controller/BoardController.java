@@ -2,9 +2,12 @@ package com.study_2.board_2.domain.controller;
 
 import com.study_2.board_2.domain.dto.req.CreateBoardReqDto;
 import com.study_2.board_2.domain.dto.req.UpdateBoardReqDto;
+import com.study_2.board_2.domain.dto.resp.GetBoardRespDto;
+import com.study_2.board_2.domain.entity.Board;
 import com.study_2.board_2.domain.service.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,42 +30,60 @@ public class BoardController {
     // 게시글 생성
     @Operation(summary = "게시글 생성", description = "게시글을 생성합니다.")
     @PostMapping
-    public ResponseEntity<?> createBoard(@RequestBody CreateBoardReqDto req) {
-    // @RequestBody를 사용하면 본문에서 JSON 데이터를 읽어와서 지정된 DTO 객체(CreateBoardReqDto)로 자동 변환해줌
-
-        createBoardService.createBoard(req);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body("게시글 생성 완료");
+    public ResponseEntity<String> createBoard(@RequestBody CreateBoardReqDto req) {
+        try {
+            createBoardService.createBoard(req);
+            return ResponseEntity.status(HttpStatus.CREATED).body("게시글 생성 완료");
+        } catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     // 게시글 상세 조회
     @Operation(summary = "게시글 상세 조회", description = "게시글의 상세 정보를 조회합니다.")
     @GetMapping("/{id}")
-    public ResponseEntity<?> getBoard(@PathVariable Long id) {
-        return ResponseEntity.ok().body(getBoardService.getBoard(id));
+    public ResponseEntity<GetBoardRespDto> getBoard(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok().body(getBoardService.getBoard(id));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     // 게시글 목록 조회
     @Operation(summary = "게시글 목록 조회", description = "게시글의 전체 목록을 조회합니다.")
     @GetMapping("/list")
-    public ResponseEntity<?> getBoardList() {
-        return ResponseEntity.ok().body(getBoardService.getBoardList());
+    public ResponseEntity<List<GetBoardRespDto>> getBoardList() {
+        try {
+            return ResponseEntity.ok().body(getBoardService.getBoardList());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     // 게시글 삭제
     @Operation(summary = "게시글 삭제", description = "게시글을 삭제합니다.")
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteBoard(@PathVariable Long id) {
-        deleteBoardService.deleteBoard(id);
-        return ResponseEntity.ok().body("게시글 삭제 완료");
+    public ResponseEntity<String> deleteBoard(@PathVariable Long id) {
+        try {
+            deleteBoardService.deleteBoard(id);
+            return ResponseEntity.ok().body("게시글 삭제 완료");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
     }
 
     // 게시글 수정
     @Operation(summary = "게시글 수정", description = "게시판글을 수정합니다.")
     @PutMapping("/update/{id}")
-    public ResponseEntity<?> updateBoard(@PathVariable Long id, @RequestBody UpdateBoardReqDto req) {
-        updateBoardService.updateBoard(id, req);
-        return ResponseEntity.ok().body("게시글 수정 완료!");
+    public ResponseEntity<String> updateBoard(@PathVariable Long id, @RequestBody UpdateBoardReqDto req) {
+        try {
+            updateBoardService.updateBoard(id, req);
+            return ResponseEntity.ok().body("게시글 수정 완료!");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     /*

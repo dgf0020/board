@@ -3,6 +3,7 @@ package com.study_2.board_2.domain.board.controller;
 import com.study_2.board_2.domain.board.dto.req.CreateBoardReqDto;
 import com.study_2.board_2.domain.board.dto.req.UpdateBoardReqDto;
 import com.study_2.board_2.domain.board.dto.resp.GetBoardRespDto;
+import com.study_2.board_2.domain.board.facade.BoardFacade;
 import com.study_2.board_2.domain.board.service.CreateBoardService;
 import com.study_2.board_2.domain.board.service.DeleteBoardService;
 import com.study_2.board_2.domain.board.service.GetBoardListPaginationService;
@@ -26,11 +27,7 @@ import org.springframework.web.bind.annotation.*;
 // @RequiredArgsConstructor를 사용하면 의존성 주입을 간편하게 할 수 있다 (service에서도 사용함)
 public class BoardController {
 
-  private final CreateBoardService createBoardService;
-  private final GetBoardService getBoardService;
-  private final DeleteBoardService deleteBoardService;
-  private final UpdateBoardService updateBoardService;
-  private final GetBoardListPaginationService getBoardListPaginationService;
+  private final BoardFacade boardFacade;
 
   // 게시글 생성
   @Operation(summary = "게시글 생성", description = "게시글을 생성합니다.")
@@ -44,7 +41,7 @@ public class BoardController {
         return ResponseEntity.status(401).body("로그인 해주세요");
       }
 
-      createBoardService.createBoard(req, user);
+      boardFacade.createBoard(req, user);
       return ResponseEntity.status(HttpStatus.CREATED).body("게시글 생성 완료");
     } catch (Exception e) {
       return ResponseEntity.badRequest().body(e.getMessage());
@@ -56,7 +53,7 @@ public class BoardController {
   @GetMapping("/{id}")
   public ResponseEntity<GetBoardRespDto> getBoard(@PathVariable Long id) {
     try {
-      return ResponseEntity.ok().body(getBoardService.getBoard(id));
+      return ResponseEntity.ok().body(boardFacade.getBoard(id));
     } catch (Exception e) {
       return ResponseEntity.badRequest().build();
     }
@@ -67,7 +64,7 @@ public class BoardController {
   @GetMapping("/list")
   public ResponseEntity<List<GetBoardRespDto>> getBoardList() {
     try {
-      return ResponseEntity.ok().body(getBoardService.getBoardList());
+      return ResponseEntity.ok().body(boardFacade.getBoardList());
     } catch (Exception e) {
       return ResponseEntity.badRequest().build();
     }
@@ -84,7 +81,7 @@ public class BoardController {
         return ResponseEntity.badRequest().body("로그인 해주세요");
       }
 
-      deleteBoardService.deleteBoard(id, user);
+      boardFacade.deleteBoard(id, user);
       return ResponseEntity.ok().body("게시글 삭제 완료");
     } catch (Exception e) {
       return ResponseEntity.badRequest().body(e.getMessage());
@@ -103,7 +100,7 @@ public class BoardController {
         return ResponseEntity.badRequest().body("로그인 해주세요");
       }
 
-      updateBoardService.updateBoard(id, req, user);
+      boardFacade.updateBoard(id, req, user);
       return ResponseEntity.ok().body("게시글 수정 완료!");
     } catch (Exception e) {
       return ResponseEntity.badRequest().body(e.getMessage());
@@ -114,13 +111,13 @@ public class BoardController {
   @Operation(summary = "페이지별 게시글 목록 조회", description = "페이지별로 게시글 목록을 조회합니다.")
   @GetMapping("/pageList")
   public ResponseEntity<List<GetBoardRespDto>> getBoardListPagination(
-      @RequestParam(defaultValue = "0") int pageNO,
+      @RequestParam(defaultValue = "0") int pageNo,
       @RequestParam(defaultValue = "10") int pageSize,
       @RequestParam(defaultValue = "createdDate") String sortBy,
       @RequestParam(defaultValue = "DESC") String direction) {
-    // defaultValue의 값은 문자열로 써야한다, pageNO가 0부터 시작한다
+    // defaultValue의 값은 문자열로 써야한다, pageNo가 0부터 시작한다
     return ResponseEntity.ok()
-        .body(getBoardService.getBoardListPagination(pageNO, pageSize, sortBy, direction)
+        .body(boardFacade.getBoardListPagination(pageNo, pageSize, sortBy, direction)
             .getContent());
   }
 

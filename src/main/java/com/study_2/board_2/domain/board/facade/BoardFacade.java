@@ -8,6 +8,7 @@ package com.study_2.board_2.domain.board.facade;
 import com.study_2.board_2.domain.board.dto.req.CreateBoardReqDto;
 import com.study_2.board_2.domain.board.dto.req.UpdateBoardReqDto;
 import com.study_2.board_2.domain.board.dto.resp.GetBoardRespDto;
+import com.study_2.board_2.domain.board.entity.Board;
 import com.study_2.board_2.domain.board.service.CreateBoardService;
 import com.study_2.board_2.domain.board.service.DeleteBoardService;
 import com.study_2.board_2.domain.board.service.GetBoardService;
@@ -31,11 +32,16 @@ public class BoardFacade {
   }
 
   public GetBoardRespDto getBoard(Long id) {
-    return getBoardService.getBoard(id);
+    return getBoardService.getBoard(id).of();
+    // 이제 entity -> dto로 바꾸는 로직도 facade에서 처리
+    // service는 단순히 엔티티를 조회하고 그대로 돌려주는 역할만 함
+    // facade는 서비스에서 엔티티를 받아 dto로 바꾼 후 컨트롤러로 전달
   }
 
   public List<GetBoardRespDto> getBoardList() {
-    return getBoardService.getBoardList();
+    return getBoardService.getBoardList().stream()
+        .map(Board::of)
+        .toList();
   }
 
   public void deleteBoard(Long id, User user) {
@@ -49,6 +55,7 @@ public class BoardFacade {
   // getBoardService.getBoardListPagination(pageNO, pageSize, sortBy, direction)
   public Page<GetBoardRespDto> getBoardListPagination(
       int pageNo, int pageSize, String sortBy, String direction) {
-    return getBoardService.getBoardListPagination(pageNo, pageSize, sortBy, direction);
+    return getBoardService.getBoardListPagination(pageNo, pageSize, sortBy, direction)
+        .map(GetBoardRespDto::from);
   }
 }

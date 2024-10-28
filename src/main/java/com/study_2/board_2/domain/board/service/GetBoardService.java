@@ -23,59 +23,24 @@ public class GetBoardService {
   //    private final BoardMapper boardMapper;
   private final BoardRepository boardRepository;
 
-  public GetBoardRespDto getBoard(Long id) {
-//        return boardMapper.getBoard(id).of();
-    /*
-    Optional<Board> optionalBoard = boardRepository.findById(id);
-    // findById() : 반환형이 Optional<T>이다
-    // Optional<T> : 값이 들어있을수도, 비어있을수도있음
-
-
-    if (optionalBoard.isPresent()) {
-      return optionalBoard.get().of();
-    } else {
-      throw new NoSuchElementException("해당 ID와 일치하는 게시글이 존재하지 않습니다.");
-    }
-    */
+  public Board getBoard(Long id) {
 
     return boardRepository.findById(id)
-      .orElseThrow(() -> new NoSuchElementException("해당 ID와 일치하는 게시글이 존재하지 않습니다."))
-      // orElseThrow : Optional 객체가 값이 있는 경우 해당 값을 반환하고,
-      //               값이 없으면 NoSuchElementException을 던집니다
-      .of();
+      .orElseThrow(() -> new NoSuchElementException("해당 ID와 일치하는 게시글이 존재하지 않습니다."));
   }
 
-  public List<GetBoardRespDto> getBoardList() {
-    List<Board> boardList = boardRepository.findAll();
+  public List<Board> getBoardList() {
 
-    return boardList.stream()
-      .map(Board::of)
-      .toList();
-      /*
-      List<Board> board = boardMapper.getBoardList();
-      // boardMapper.getBoardList() 메서드를 호출 => board 테이블 전체를 가져옴
-      // 그것을 List<Board> 타입의 board 변수에 저장한다.
-      // (왜냐하면 boardMapper.getBoardList()의 반환형이 List<Board> != List<GetBoardRespDto>
-      // 바로 return이 안된다)
-
-      return board.stream()
-        // 해당 리스트(List<Board>)를 스트림으로 변환.
-        // 스트림을 사용하면 컬렉션의 요소들을 쉽게 필터링, 변환, 정렬할 수 있다.
-        .map(Board::of)
-        // map은 스트림의 각 요소를 변환할 때 사용
-        // Board를 of(GetBoardRespDto)로 변환
-        .toList();
-        // 변환한 것들을 List 형태로 주워담아서 결국 List<GetBoardRespDto>가 된다
-      */
+    return boardRepository.findAll();
   }
 
   // pagination도 GetBoardService에 같이 하자!
-  public Page<GetBoardRespDto> getBoardListPagination(int pageNo, int pageSize, String sortBy, String direction) {
+  public Page<Board> getBoardListPagination(int pageNo, int pageSize, String sortBy, String direction) {
   // pageNo, pageSize 외에도 정렬방식 등을 받을 수도 있다.
 
     Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(Sort.Direction.fromString(direction), sortBy));
 
-    return boardRepository.findAll(pageable).map(GetBoardRespDto::from);
+    return boardRepository.findAll(pageable);
     //return boardRepository.findAllByOrderByCreatedDateDesc(pageable).map(GetBoardRespDto::from);
   }
 
